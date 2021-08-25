@@ -37,3 +37,27 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+// use App\Http\Controllers\SocialController;
+
+Route::get('/with/{server}', 'App\Http\Controllers\SocialController@facebook');
+
+Route::get('/callback/{server}', 'App\Http\Controllers\SocialController@callback');
+
+// use App\Http\Controllers\InsertDB;
+
+// use Mcamara\LaravelLocalization\LaravelLocalization;
+
+
+
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+], function () {
+    Route::prefix('user')->group(function () {
+
+        Route::post('insert', [App\Http\Controllers\InsertDB::class, 'Insert'])->name('user.insert');
+        Route::get('show', [App\Http\Controllers\InsertDB::class, 'Show']);
+    });
+});
