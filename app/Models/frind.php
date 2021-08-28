@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class frind extends Model
 {
 
-    // protected $table = 'frinds';
-    protected $fillable = ['frind_name', 'Full_name', 'Date', 'what_need'];
+    protected $table = 'frinds';
+
+
+    protected $fillable = ['frind_name_ar', 'frind_name_en', 'Full_name', 'Date', 'what_need_ar', 'what_need_en', 'photo'];
 }

@@ -18,6 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .thumbnail{
+            width: 130px;
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -75,9 +81,24 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 container ">
+            <nav>
+                <ul>
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <li>
+                            <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </nav>
+
             @yield('content')
         </main>
+
     </div>
+
+
 </body>
 </html>

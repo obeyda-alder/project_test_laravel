@@ -9,11 +9,14 @@ return [
     'date required' => 'date falid required',
     'needed required' => 'needed falid required',
 
-    'name' => '< Name >',
+    'name ar' => '< Name ar >',
+    'name en' => '< Name en >',
     'Full' => '< Full Name >',
     'Date' => '< Date >',
-    'Ned' => '< Needed >',
+    'Ned ar' => '< Needed ar >',
+    'Ned en' => '< Needed en >',
 
     'success' => 'this is success inserted',
     'save' => 'Save',
+    'photo' => 'Photo',
 ];

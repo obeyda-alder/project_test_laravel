@@ -33,6 +33,7 @@ Route::get('resu/{id}', [Obeyda::class, 'show']);
 
 
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Auth::routes(['verify' => true]);
 
@@ -51,13 +52,36 @@ Route::get('/callback/{server}', 'App\Http\Controllers\SocialController@callback
 
 
 
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
     Route::prefix('user')->group(function () {
 
-        Route::post('insert', [App\Http\Controllers\InsertDB::class, 'Insert'])->name('user.insert');
         Route::get('show', [App\Http\Controllers\InsertDB::class, 'Show']);
+        Route::post('insert', [App\Http\Controllers\InsertDB::class, 'Insert'])->name('user.insert');
+
+        // Update data
+        Route::get('edit/{id}', [App\Http\Controllers\InsertDB::class, 'EditData']);
+        Route::get('delete/{id}', [App\Http\Controllers\InsertDB::class, 'deleteData'])->name('user.Delete');
+        Route::post('update/{id}', [App\Http\Controllers\InsertDB::class, 'UpdateData'])->name('user.Update');
+
+
+        Route::get('showData', [App\Http\Controllers\InsertDB::class, 'ShowData']);
+
+        Route::get('ShowVideo', [App\Http\Controllers\InsertDB::class, 'ShowVideo']);
+
+
+        Route::get('ShowVideo/Count', [App\Http\Controllers\InsertDB::class, 'Reset']);
     });
+});
+
+
+########################  AJAX ##############
+use App\Http\Controllers\UseAjaxController;
+
+Route::prefix('Ajax-frinds')->group(function () {
+    Route::get('create', [UseAjaxController::class, 'create']);
+    Route::post('store', [UseAjaxController::class, 'store']);
 });

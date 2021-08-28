@@ -3,8 +3,9 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ route('user.insert') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('user.Update', $ider->id) }}" method="POST">
         @csrf
+        {{-- @method('PUT') --}}
 
         @if(Session::has('success'))
             <div class="alert alert-success text-center">
@@ -14,7 +15,7 @@
 
         <div class="mb-3">
           <label class="form-label">{{ __('messages.name ar') }}</label>
-          <input type="text" class="form-control" name="name_ar" placeholder="{{ __('messages.name ar') }}">
+          <input type="text" class="form-control" value="{{ $ider->frind_name_ar }}" name="name_ar" placeholder="{{ __('messages.name ar') }}"  required  autofocus>
             @error('name_ar')
                 <q class="form-text text-danger">{{ $message }}</q>
             @enderror
@@ -22,7 +23,7 @@
 
         <div class="mb-3">
           <label class="form-label">{{ __('messages.name en') }}</label>
-          <input type="text" class="form-control" name="name_en" placeholder="{{ __('messages.name en') }}">
+          <input type="text" class="form-control" name="name_en" value="{{ $ider->frind_name_en }}" placeholder="{{ __('messages.name en') }}" required>
             @error('name_en')
                 <q class="form-text text-danger">{{ $message }}</q>
             @enderror
@@ -31,7 +32,7 @@
 
         <div class="mb-3">
           <label class="form-label">{{ __('messages.Full') }}</label>
-          <input type="text" class="form-control" name="full" placeholder="{{ __('messages.Full') }}">
+          <input type="text" class="form-control" name="full" value="{{ $ider->Full_name }}" placeholder="{{ __('messages.Full') }}" required>
             @error('full')
                 <q class="form-text text-danger">{{ $message }}</q>
             @enderror
@@ -40,7 +41,7 @@
 
         <div class="mb-3">
             <label class="form-label" > {{ __('messages.Date') }} </label>
-          <input type="datetime-local" class="form-control" name="date" placeholder="{{ __('messages.Date') }}">
+          <input type="datetime-local" class="form-control" name="date" value="{{ old('time') ?? date('Y-m-d\TH:i', strtotime($ider->Date)) }}" placeholder="{{ __('messages.Date') }}" required>
             @error('date')
                   <q class="form-text text-danger">{{ $message }}</q>
             @enderror
@@ -49,7 +50,7 @@
 
         <div class="mb-3">
             <label class="form-label" > {{ __('messages.Ned ar') }} </label>
-          <input type="text" class="form-control" name="needed_ar" placeholder="{{  __('messages.Ned ar') }}">
+          <input type="text" class="form-control" name="needed_ar" value="{{ $ider->what_need_ar }}" placeholder="{{  __('messages.Ned ar') }}" required>
             @error('needed_ar')
                     <q class="form-text text-danger">{{ $message }}</q>
             @enderror
@@ -57,17 +58,8 @@
 
         <div class="mb-3">
             <label class="form-label" > {{ __('messages.Ned en') }} </label>
-          <input type="text" class="form-control" name="needed_en" placeholder="{{  __('messages.Ned en') }}">
+          <input type="text" class="form-control" name="needed_en" value="{{ $ider->what_need_en }}" placeholder="{{  __('messages.Ned en') }}" required>
             @error('needed_en')
-                    <q class="form-text text-danger">{{ $message }}</q>
-            @enderror
-        </div>
-
-
-        <div class="mb-3">
-            <label class="form-label" > {{ __('messages.photo') }} </label>
-          <input type="file" class="form-control" name="photo" placeholder="{{  __('messages.photo') }}">
-            @error('photo')
                     <q class="form-text text-danger">{{ $message }}</q>
             @enderror
         </div>
