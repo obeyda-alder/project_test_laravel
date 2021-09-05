@@ -26,7 +26,12 @@ class ListenerVideo
      */
     public function handle(EventVideo $event)
     {
-        $this->Increase($event->event);
+        if (!session()->has('videoIs')) {
+
+            $this->Increase($event->event);
+        } else {
+            return false;
+        }
     }
 
 
@@ -35,5 +40,7 @@ class ListenerVideo
     {
         $event->views = $event->views + 1;
         $event->save();
+
+        session()->put('videoIs', $event->id);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomAuth\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,4 +85,70 @@ use App\Http\Controllers\UseAjaxController;
 Route::prefix('Ajax-frinds')->group(function () {
     Route::get('create', [UseAjaxController::class, 'create']);
     Route::post('store', [UseAjaxController::class, 'store']);
+    Route::get('all', [UseAjaxController::class, 'all']);
+    Route::post('delete', [UseAjaxController::class, 'delete']);
+
+
+    Route::get('Edit/{id}', [UseAjaxController::class, 'Edit'])->name('Ajax-frinds.edit');
+    Route::post('Update', [UseAjaxController::class, 'Update'])->name('Ajax-frinds.update');
 });
+########################  AJAX #########################
+
+
+########################  Custom auth #########################
+Route::group(['prefix' => 'checkmiddleware'], function () {
+
+    Route::get('dashboard', function () {
+        return 'You Are Not Allowed';
+    })->name('dashboard');
+
+    Route::get('AddAuth', [AuthController::class, 'AddAuth'])->name('ChekAge')->middleware('ChekAge');
+});
+
+Route::get('site',  [AuthController::class, 'site'])->name('site')->middleware('auth:web');
+Route::get('Admin',  [AuthController::class, 'Admin'])->name('Admin')->middleware('auth:admin');
+
+Route::get('Admin/login',  [AuthController::class, 'AdminLogin'])->name('AdminLogin');
+Route::post('Admin/login',  [AuthController::class, 'checkAdminLogin'])->name('check.admin.save');
+
+########################  Custom auth #########################
+
+
+########################  Relations #########################
+
+#############   one to one relationship => 1
+use App\Http\Controllers\Relations\RelationController;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
+Route::get('one-relation', [RelationController::class, 'GetAge']);
+
+#################### one to many realtionship => 2
+
+Route::get('test1/hospital', [RelationController::class, 'gethospital']);
+
+
+Route::get('HospitalsPage', [RelationController::class, 'HospitalsPage']);
+Route::get('DoctorsPage/{id}', [RelationController::class, 'DoctorsPage']);
+
+
+Route::get('DeleteHospital/{id}', [RelationController::class, 'DeleteHospital']);
+
+#################### many to many realtionship => 3
+
+Route::get('Doctor-Server', [RelationController::class, 'DoctorServer']);
+
+Route::get('Server-Doctor', [RelationController::class, 'ServerDoctor']);
+
+
+Route::get('Services/{id}', [RelationController::class, 'Servives'])->name('Services');
+
+Route::post('AddServices', [RelationController::class, 'AddServives'])->name('Add_Services');
+
+#################### has one through realtionship => 4
+Route::get('HasRelationThrough', [RelationController::class, 'HasRelationThrough']);
+
+#################### has many through realtionship => 5
+Route::get('HasRelationManyThrough', [RelationController::class, 'HasRelationManyThrough']);
+
+
+########################  Relations #########################

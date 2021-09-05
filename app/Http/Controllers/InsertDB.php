@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Models\event;
+use Illuminate\Cache\RateLimiting\Limit;
 
 use function GuzzleHttp\Promise\all;
 
@@ -146,7 +147,7 @@ class InsertDB extends Controller
         $student->what_need_ar       = $request->input('needed_ar');
         $student->what_need_en       = $request->input('needed_en');
         $student->update();
-        return redirect()->back()->with(['success' => __('messages.success')]);;
+        return redirect()->back()->with(['success' => __('messages.success')]);
     }
 
     protected function getImages($photo, $folder_path)

@@ -23,6 +23,10 @@
             width: 130px;
             height: 80px;
         }
+        .thumbnail_img{
+            width: 200px;
+            height: 150px;
+        }
     </style>
 </head>
 <body>
@@ -100,5 +104,9 @@
     </div>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    @yield('script')
 </body>
 </html>
